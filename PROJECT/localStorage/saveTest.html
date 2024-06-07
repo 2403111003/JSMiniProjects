@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input id="id" type="text">
+        <input id="pwd" type="text">
+        <button id="loginBtn">로그인</button>
+        <button id="displayBtn">사용자 정보 출력</button>
+        <div id="userId"></div>
+        <div id="userPwd"></div>
+    </div>
+    <script>
+        const idElement = document.getElementById("id");
+        const pwdElement = document.getElementById("pwd");
+        const loginButton = document.getElementById("loginBtn");
+
+        const displayButton = document.getElementById("displayBtn");
+        const userIdElement = document.getElementById("userId");
+        const userPwdElement = document.getElementById("userPwd");
+
+        displayButton.addEventListener("click", function () {
+            const loadInfo = localStorage.getItem("userInfo");
+            if (loadInfo) {
+                const userLoginInfo = JSON.parse(loadInfo);
+                userIdElement.innerText = "사용자 아이디: " + userLoginInfo.id;
+                userPwdElement.innerText = "사용자 비밀번호: " + userLoginInfo.pwd;
+            } else {
+                userIdElement.innerText = "사용자 정보가 없습니다.";
+                userPwdElement.innerText = "";
+            }
+        });
+
+        loginButton.addEventListener("click", () => {
+            const userInfo = {
+                id: idElement.value,
+                pwd: pwdElement.value
+            };
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        });
+    </script>
+</body>
+
+</html>
